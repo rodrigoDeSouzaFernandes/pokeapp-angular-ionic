@@ -1,8 +1,8 @@
 :root {
-  --color-electric-light: #FFEB3B;
-  --color-electric-dark: #FBC02D;
+  --color-electric-light: #ffeb3b;
+  --color-electric-dark: #fbc02d;
   --color-electric-shadow: rgba(251, 192, 45, 0.3);
-  --color-primary: #1E88E5;
+  --color-primary: #1e88e5;
   --color-text-dark: #222;
   --color-bg-light: #f8f9fa;
   --color-separator: #ddd;
@@ -11,10 +11,13 @@
 ion-content {
   background-color: var(--color-bg-light);
   padding: 1rem 1.2rem;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  > * {
+    max-width: 1400px;
+    margin: auto;
+  }
 }
 
-/* Card com degradê + sombra */
 .pokemon-card {
   background: linear-gradient(135deg, #1e3c72, #2a5298);
   border-radius: 24px;
@@ -25,11 +28,6 @@ ion-content {
   transition: transform 0.3s ease;
 }
 
-.pokemon-card:hover {
-  transform: translateY(-6px);
-}
-
-/* Imagem */
 .pokemon-img {
   width: 160px;
   height: 160px;
@@ -43,7 +41,8 @@ ion-content {
 }
 
 @keyframes floatUpDown {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -51,7 +50,6 @@ ion-content {
   }
 }
 
-/* Card Header */
 ion-card-header {
   text-align: center;
   margin-top: 0.8rem;
@@ -74,30 +72,35 @@ ion-card-subtitle {
   margin-top: 0.3rem;
 }
 
-/* Seções */
 .info-section {
   margin-bottom: 2rem;
   border-bottom: 2px dashed var(--color-separator);
+  padding: 2rem;
   padding-bottom: 1.2rem;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-left: 5px solid var(--color-primary);
+    padding-left: 0.8rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #444;
+    margin: 0.3rem 0;
+  }
 }
 
-.info-section:last-of-type {
-  border-bottom: none;
-}
-
-/* Títulos */
-.info-section h2 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  margin-bottom: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-left: 5px solid var(--color-primary);
-  padding-left: 0.8rem;
-}
-
-/* Chips */
 .types-container,
 .moves-container {
   display: flex;
@@ -114,50 +117,49 @@ ion-chip {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   text-transform: capitalize;
   transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+  }
 }
 
-ion-chip:hover {
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+.moves-container {
+  ion-chip {
+    background: #f0f8ff;
+    color: var(--color-primary);
+    box-shadow: 0 1px 5px rgba(30, 136, 229, 0.3);
+  }
 }
 
-/* Altura e peso */
-.info-section p {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #444;
-  margin: 0.3rem 0;
-}
-
-/* Lista habilidades */
 ul {
   padding-left: 1.4rem;
   color: #444;
   font-weight: 600;
   font-size: 1rem;
+  list-style: none;
+
+  li {
+    margin-bottom: 0.4rem;
+
+    em {
+      font-style: italic;
+      color: #888;
+    }
+  }
 }
 
-ul li {
-  margin-bottom: 0.4rem;
-}
-
-ul li em {
-  font-style: italic;
-  color: #888;
-}
-
-/* Status base */
 .stat-row {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 0.6rem;
-}
 
-.stat-row span:first-child {
-  flex: 1 1 130px;
-  font-weight: 700;
-  text-transform: capitalize;
-  color: #444;
+  span:first-child {
+    flex: 1 1 130px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: #444;
+  }
 }
 
 ion-progress-bar {
@@ -177,17 +179,6 @@ ion-progress-bar {
   font-size: 1rem;
 }
 
-/* Movimentos */
-.moves-container ion-chip {
-  background: #f0f8ff;
-  color: var(--color-primary);
-  font-weight: 700;
-  border-radius: 18px;
-  padding: 6px 14px;
-  box-shadow: 0 1px 5px rgba(30, 136, 229, 0.3);
-}
-
-/* Loading */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -199,7 +190,33 @@ ion-progress-bar {
   font-size: 1.2rem;
 }
 
-/* Responsividade */
+.first-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 25%);
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: start;
+  background-color: #1e3c7210;
+  padding: 2rem;
+  gap: clamp(1rem, 5vw, 200px);
+
+  margin-top: 2rem !important;
+  border-radius: 1rem;
+
+  .info-section {
+    background-color: #1e31e310;
+    height: 100%;
+    border-radius: 1rem;
+  }
+}
+
+.size-info,
+.base-xp {
+  p {
+    padding-left: 1rem;
+  }
+}
+
 @media (max-width: 480px) {
   .pokemon-card {
     padding: 1rem 0.6rem 1.4rem;
