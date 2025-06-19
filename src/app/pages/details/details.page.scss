@@ -1,0 +1,241 @@
+:root {
+  --color-electric-light: #FFEB3B;
+  --color-electric-dark: #FBC02D;
+  --color-electric-shadow: rgba(251, 192, 45, 0.3);
+  --color-primary: #1E88E5;
+  --color-text-dark: #222;
+  --color-bg-light: #f8f9fa;
+  --color-separator: #ddd;
+}
+
+ion-content {
+  background-color: var(--color-bg-light);
+  padding: 1rem 1.2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card com degradê + sombra */
+.pokemon-card {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  border-radius: 24px;
+  box-shadow: 0 12px 30px var(--color-electric-shadow);
+  margin-bottom: 2.2rem;
+  padding: 1.6rem 0.8rem 2rem;
+  color: var(--color-text-dark);
+  transition: transform 0.3s ease;
+}
+
+.pokemon-card:hover {
+  transform: translateY(-6px);
+}
+
+/* Imagem */
+.pokemon-img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #fff;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  margin: 0 auto 1rem;
+  display: block;
+  animation: floatUpDown 4s ease-in-out infinite;
+}
+
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Card Header */
+ion-card-header {
+  text-align: center;
+  margin-top: 0.8rem;
+  color: white;
+}
+
+ion-card-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1.2px;
+}
+
+ion-card-subtitle {
+  font-size: 1rem;
+  color: #eee;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-top: 0.3rem;
+}
+
+/* Seções */
+.info-section {
+  margin-bottom: 2rem;
+  border-bottom: 2px dashed var(--color-separator);
+  padding-bottom: 1.2rem;
+}
+
+.info-section:last-of-type {
+  border-bottom: none;
+}
+
+/* Títulos */
+.info-section h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-left: 5px solid var(--color-primary);
+  padding-left: 0.8rem;
+}
+
+/* Chips */
+.types-container,
+.moves-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+ion-chip {
+  background-color: white;
+  color: var(--color-text-dark);
+  font-weight: 700;
+  border-radius: 18px;
+  padding: 6px 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  text-transform: capitalize;
+  transition: box-shadow 0.3s ease;
+}
+
+ion-chip:hover {
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* Altura e peso */
+.info-section p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #444;
+  margin: 0.3rem 0;
+}
+
+/* Lista habilidades */
+ul {
+  padding-left: 1.4rem;
+  color: #444;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+ul li {
+  margin-bottom: 0.4rem;
+}
+
+ul li em {
+  font-style: italic;
+  color: #888;
+}
+
+/* Status base */
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.stat-row span:first-child {
+  flex: 1 1 130px;
+  font-weight: 700;
+  text-transform: capitalize;
+  color: #444;
+}
+
+ion-progress-bar {
+  flex: 1 1 auto;
+  height: 18px;
+  border-radius: 12px;
+  overflow: hidden;
+  --progress-background: #cce4ff;
+  --background: #e7f1ff;
+}
+
+.stat-value {
+  width: 40px;
+  font-weight: 800;
+  text-align: right;
+  color: var(--color-primary);
+  font-size: 1rem;
+}
+
+/* Movimentos */
+.moves-container ion-chip {
+  background: #f0f8ff;
+  color: var(--color-primary);
+  font-weight: 700;
+  border-radius: 18px;
+  padding: 6px 14px;
+  box-shadow: 0 1px 5px rgba(30, 136, 229, 0.3);
+}
+
+/* Loading */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 65vh;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .pokemon-card {
+    padding: 1rem 0.6rem 1.4rem;
+  }
+
+  .pokemon-img {
+    width: 130px;
+    height: 130px;
+    margin: -65px auto 0;
+  }
+
+  ion-card-title {
+    font-size: 1.6rem;
+  }
+
+  .info-section h2 {
+    font-size: 1.1rem;
+  }
+
+  .stat-row span:first-child {
+    flex-basis: 100px;
+    font-size: 0.9rem;
+  }
+
+  .stat-value {
+    width: 32px;
+    font-size: 0.95rem;
+  }
+
+  ion-chip {
+    height: 30px;
+    font-size: 0.9rem;
+    padding: 0 12px;
+  }
+
+  ul {
+    font-size: 0.95rem;
+  }
+}

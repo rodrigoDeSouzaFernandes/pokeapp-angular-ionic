@@ -1,13 +1,80 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>details</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ pokemon?.name | titlecase }} #{{ pokemon?.id }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding" *ngIf="pokemon && !loading; else loadingTpl">
+
+  <ion-card class="pokemon-card">
+    <img
+      [src]="artworkImg"
+      [alt]="pokemon.name"
+      loading="lazy"
+      class="pokemon-img"
+    />
+    <ion-card-header>
+      <ion-card-title>{{ pokemon.name | titlecase }}</ion-card-title>
+      <ion-card-subtitle>ID: {{ pokemon.id }}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <section class="info-section">
+    <h2>Tipos</h2>
+    <div class="types-container">
+      <ion-chip *ngFor="let type of pokemon.types" [color]="type.type.name">
+        <ion-label>{{ type.type.name | titlecase }}</ion-label>
+      </ion-chip>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <h2>Altura e Peso</h2>
+    <p><strong>Altura:</strong> {{ formatHeight(pokemon.height) }}</p>
+    <p><strong>Peso:</strong> {{ formatWeight(pokemon.weight) }}</p>
+  </section>
+
+  <section class="info-section">
+    <h2>Habilidades</h2>
+    <ul>
+      <li *ngFor="let ability of pokemon.abilities">
+        {{ ability.ability.name | titlecase }}
+        <em *ngIf="ability.is_hidden">(Oculta)</em>
+      </li>
+    </ul>
+  </section>
+
+  <section class="info-section">
+    <h2>Status Base</h2>
+    <div *ngFor="let stat of pokemon.stats" class="stat-row">
+      <span>{{ stat.stat.name | titlecase }}</span>
+      <ion-progress-bar [value]="stat.base_stat / 100" buffer="1" color="primary"></ion-progress-bar>
+      <span class="stat-value">{{ stat.base_stat }}</span>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <h2>Experiência Base</h2>
+    <p>{{ pokemon.base_experience }}</p>
+  </section>
+
+  <section class="info-section">
+    <h2>Movimentos</h2>
+    <div class="moves-container">
+      <ion-chip *ngFor="let move of pokemon.moves.slice(0, 20)"> <!-- limita os moves para não ficar gigante -->
+        <ion-label>{{ move.move.name | titlecase }}</ion-label>
+      </ion-chip>
+    </div>
+  </section>
+
 </ion-content>
+
+<ng-template #loadingTpl>
+  <div class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando dados...</p>
+  </div>
+</ng-template>
