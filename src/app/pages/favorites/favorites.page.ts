@@ -7,10 +7,6 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonIcon,
 } from '@ionic/angular/standalone';
 import { Pokemon } from '../../models/pokemon.model';
 import { alertController } from '@ionic/core';
@@ -28,11 +24,7 @@ import { PokemonCardComponent } from 'src/app/components/pokemon-card/pokemon-ca
     IonToolbar,
     IonTitle,
     IonContent,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
     CommonModule,
-    IonIcon,
     PokemonCardComponent,
   ],
 })

@@ -10,7 +10,6 @@
       <app-pokemon-card
         [pokemon]="pokemon"
         [isFavorite]="favoriteIds.has(pokemon.id)"
-        (cardClick)="openDetails($event)"
         (favoriteClick)="toggleFavorite($event.pokemon, $event.event)"
       >
       </app-pokemon-card>

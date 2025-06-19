@@ -92,10 +92,6 @@ export class HomePage implements OnInit {
     this.loadPokemons(this.offset);
   }
 
-  openDetails(name: string) {
-    this.router.navigate(['/pokemon', name]);
-  }
-
   async toggleFavorite(pokemon: Pokemon, event: Event) {
     event.stopImmediatePropagation();
 

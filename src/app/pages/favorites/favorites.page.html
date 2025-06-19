@@ -32,7 +32,6 @@
       <app-pokemon-card
         [pokemon]="pokemon"
         [isFavorite]="true"
-        (cardClick)="openDetails($event)"
         (favoriteClick)="removeFavorite($event.pokemon, $event.event)"
       >
       </app-pokemon-card>
