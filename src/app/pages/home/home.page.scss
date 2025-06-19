@@ -47,8 +47,22 @@ ion-header {
       transition: width 0.3s ease;
     }
 
-    &:hover::before {
-      width: 100%;
+    .favorite-button-text {
+      display: none;
+    }
+  }
+}
+
+@media screen and (min-width: 400px) {
+  ion-header {
+    .favorite-button {
+      &:hover::before {
+        width: 100%;
+      }
+
+      .favorite-button-text {
+        display: block;
+      }
     }
   }
 }

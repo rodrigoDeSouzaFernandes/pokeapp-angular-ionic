@@ -8,12 +8,8 @@ import {
   IonTitle,
   IonContent,
   IonButton,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
   IonSpinner,
   IonIcon,
-  IonButtons,
 } from '@ionic/angular/standalone';
 import { PokeapiService } from '../../services/pokeapi.service';
 import { Pokemon } from '../../models/pokemon.model';
@@ -34,20 +30,16 @@ import { Router } from '@angular/router';
     IonTitle,
     IonContent,
     IonButton,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
     IonSpinner,
     CommonModule,
     IonIcon,
     PokemonCardComponent,
-    IonButtons,
   ],
 })
 export class HomePage implements OnInit {
   pokemons: Pokemon[] = [];
   favoriteIds = new Set<number>();
-  pageSize = 20;
+  pageSize: number = 50;
   offset = 0;
   limit = this.pageSize;
   loading = false;
@@ -60,7 +52,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.loadFavorites();
-    this.loadPokemons();
+    this.loadPokemons(0);
   }
 
   loadFavorites() {
@@ -71,7 +63,7 @@ export class HomePage implements OnInit {
 
   loadPokemons(offset: number = this.offset) {
     this.loading = true;
-    this._pokemonService.getPokemons(offset, this.limit).subscribe({
+    this._pokemonService.getPokemons(this.limit, offset).subscribe({
       next: (res: { results: Pokemon[] }) => {
         const newPokemons: Pokemon[] = res.results.map((pokemon) => {
           const parts = pokemon.url.split('/').filter(Boolean);
@@ -90,7 +82,6 @@ export class HomePage implements OnInit {
 
   loadMore() {
     this.offset += this.pageSize;
-    this.limit += this.pageSize;
     this.loadPokemons(this.offset);
   }
 
