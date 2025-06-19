@@ -11,7 +11,6 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardSubtitle,
   IonSpinner,
   IonIcon,
 } from '@ionic/angular/standalone';
@@ -35,7 +34,6 @@ import { ToastController } from '@ionic/angular';
     IonCard,
     IonCardHeader,
     IonCardTitle,
-    IonCardSubtitle,
     IonSpinner,
     CommonModule,
     IonIcon,

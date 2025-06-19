@@ -1,13 +1,33 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>favorites</ion-title>
+    <ion-title>Favoritos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">favorites</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-list *ngIf="pokemons.length > 0; else noFavorites">
+    <ion-item *ngFor="let pokemon of pokemons" (click)="openDetails(pokemon.name)">
+      <ion-card>
+        <ion-icon
+          name="heart"
+          class="favorite-icon"
+          (click)="removeFavorite(pokemon, $event)"
+        ></ion-icon>
+
+        <img
+          [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + pokemon.id + '.png'"
+          [alt]="pokemon.name"
+          loading="lazy"
+        />
+
+        <ion-card-header>
+          <ion-card-title>{{ pokemon.name | titlecase }}</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #noFavorites>
+    <p>Nenhum Pokémon favoritado ainda.</p>
+  </ng-template>
 </ion-content>
