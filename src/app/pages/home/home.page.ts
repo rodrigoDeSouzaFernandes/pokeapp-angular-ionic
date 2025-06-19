@@ -13,8 +13,11 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonSpinner,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { PokeapiService } from '../../services/pokeapi.service';
+import { Pokemon } from '../../models/pokemon.model';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -35,32 +38,44 @@ import { PokeapiService } from '../../services/pokeapi.service';
     IonCardSubtitle,
     IonSpinner,
     CommonModule,
+    IonIcon,
   ],
 })
 export class HomePage implements OnInit {
-  pokemons: any[] = [];
+  pokemons: Pokemon[] = [];
+  favoriteIds = new Set<number>();
+  pageSize = 20;
   offset = 0;
-  limit = 20;
+  limit = this.pageSize;
   loading = false;
 
-  constructor(private _pokemonService: PokeapiService) {}
+  constructor(
+    private _pokemonService: PokeapiService,
+    private toastController: ToastController
+  ) {}
 
   ngOnInit() {
+    this.loadFavorites();
     this.loadPokemons();
+  }
+
+  loadFavorites() {
+    const stored = localStorage.getItem('favorites');
+    const favorites: Pokemon[] = stored ? JSON.parse(stored) : [];
+    this.favoriteIds = new Set(favorites.map((p) => p.id));
   }
 
   loadPokemons(offset: number = this.offset) {
     this.loading = true;
     this._pokemonService.getPokemons(offset, this.limit).subscribe({
-      next: (res: any) => {
-        const newPokemons = res.results.map((pokemon: any) => {
+      next: (res: { results: Pokemon[] }) => {
+        const newPokemons: Pokemon[] = res.results.map((pokemon) => {
           const parts = pokemon.url.split('/').filter(Boolean);
           const id = +parts[parts.length - 1];
           return { ...pokemon, id };
         });
 
         this.pokemons = [...this.pokemons, ...newPokemons];
-
         this.loading = false;
       },
       error: () => {
@@ -70,13 +85,47 @@ export class HomePage implements OnInit {
   }
 
   loadMore() {
-    this.offset += 20;
-    this.limit += 20;
+    this.offset += this.pageSize;
+    this.limit += this.pageSize;
     this.loadPokemons(this.offset);
   }
 
   openDetails(name: string) {
     alert(`Abrir detalhes do Pokémon: ${name}`);
     // Aqui você pode navegar para outra página com detalhes usando router.navigate etc
+  }
+
+  async toggleFavorite(pokemon: Pokemon, event: Event) {
+  event.stopImmediatePropagation();
+
+  const storageKey = 'favorites';
+
+  const stored = localStorage.getItem(storageKey);
+  const favorites: Pokemon[] = stored ? JSON.parse(stored) : [];
+
+  const index = favorites.findIndex((p) => p.id === pokemon.id);
+
+  if (index > -1) {
+    favorites.splice(index, 1);
+    this.favoriteIds.delete(pokemon.id);
+    await this.presentToast(`${pokemon.name} removido dos favoritos.`);
+  } else {
+    favorites.push(pokemon);
+    this.favoriteIds.add(pokemon.id);
+    await this.presentToast(`${pokemon.name} adicionado aos favoritos.`);
+  }
+
+  localStorage.setItem(storageKey, JSON.stringify(favorites));
+}
+
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 1500,
+      position: 'bottom',
+      color: 'primary',
+    });
+    toast.present();
   }
 }
