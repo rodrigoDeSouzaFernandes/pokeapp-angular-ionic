@@ -19,6 +19,7 @@ import {
   IonCardSubtitle,
 } from '@ionic/angular/standalone';
 import { PokeapiService } from '../../services/pokeapi.service';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 
 @Component({
   selector: 'app-details',
@@ -42,6 +43,7 @@ import { PokeapiService } from '../../services/pokeapi.service';
     CommonModule,
     IonSpinner,
     IonCardSubtitle,
+    HeaderComponent
   ],
 })
 export class DetailsPage implements OnInit {

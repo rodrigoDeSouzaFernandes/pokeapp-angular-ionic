@@ -1,13 +1,8 @@
-<ion-header>
-  <div class="header-container">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/home"></ion-back-button>
-      </ion-buttons>
-      <ion-title>Favoritos</ion-title>
-    </ion-toolbar>
-  </div>
-</ion-header>
+<app-header
+  [title]="'Favoritos'"
+  [showFavorites]="false"
+  [showBack]="true"
+></app-header>
 
 <ion-content class="ion-padding">
   <ion-list *ngIf="pokemons.length > 0; else noFavorites">

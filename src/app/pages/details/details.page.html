@@ -1,13 +1,8 @@
-<ion-header>
-  <div class="header-container">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/home"></ion-back-button>
-      </ion-buttons>
-      <ion-title>{{ pokemon?.name | titlecase }} #{{ pokemon?.id }}</ion-title>
-    </ion-toolbar>
-  </div>
-</ion-header>
+<app-header
+  [title]="'Detalhes'"
+  [showFavorites]="true"
+  [showBack]="true"
+></app-header>
 
 <ion-content class="ion-padding" *ngIf="pokemon && !loading; else loadingTpl">
   <ion-card class="pokemon-card">

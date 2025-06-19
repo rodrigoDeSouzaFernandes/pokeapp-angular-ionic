@@ -49,10 +49,6 @@ ion-card img {
   transition: transform 0.5s;
 }
 
-ion-card-header {
-  padding: 0 0 8px 0;
-}
-
 ion-card-title {
   font-weight: 700;
   font-size: 1.1rem;
@@ -79,9 +75,4 @@ ion-button {
 ion-card-subtitle {
   color: var(--ion-color-medium);
   font-size: 0.85rem;
-}
-
-.header-container {
-  max-width: $max-width;
-  margin: auto;
 }

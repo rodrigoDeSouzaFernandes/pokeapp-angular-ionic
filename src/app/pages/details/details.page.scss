@@ -20,11 +20,6 @@ ion-content {
   }
 }
 
-.header-container {
-  max-width: $max-width;
-  margin: auto;
-}
-
 .pokemon-card {
   background: linear-gradient(135deg, #1e3c72, #2a5298);
   border-radius: 24px;
@@ -55,12 +50,6 @@ ion-content {
   50% {
     transform: translateY(-8px);
   }
-}
-
-ion-card-header {
-  text-align: center;
-  margin-top: 0.8rem;
-  color: white;
 }
 
 ion-card-title {

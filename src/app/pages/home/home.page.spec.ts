@@ -25,7 +25,7 @@ describe('HomePage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, HomePage],  
+      imports: [HttpClientTestingModule, HomePage],
       providers: [
         PokeapiService,
         { provide: ToastController, useClass: ToastControllerMock },
@@ -58,7 +58,7 @@ describe('HomePage', () => {
 
     expect(pokeapiService.getPokemons).toHaveBeenCalledWith(component.limit, 0);
     expect(component.pokemons.length).toBe(2);
-    expect(component.pokemons[0].id).toBe(1);  
+    expect(component.pokemons[0].id).toBe(1);
     expect(component.pokemons[1].name).toBe('ivysaur');
     expect(component.loading).toBeFalse();
   });
@@ -79,11 +79,5 @@ describe('HomePage', () => {
 
     const storedAfter = JSON.parse(localStorage.getItem('favorites') || '[]');
     expect(storedAfter.find((p: any) => p.id === pokemon.id)).toBeFalsy();
-  });
-
-  it('should navigate to favorites on seeFavorites', () => {
-    component.seeFavorites();
-    const router = TestBed.inject(Router) as unknown as RouterMock;
-    expect(router.navigate).toHaveBeenCalledWith(['/favorites']);
   });
 });

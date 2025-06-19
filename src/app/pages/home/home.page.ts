@@ -3,18 +3,15 @@ import { CommonModule } from '@angular/common';
 import {
   IonList,
   IonItem,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonButton,
   IonSpinner,
-  IonIcon,
 } from '@ionic/angular/standalone';
 import { PokeapiService } from '../../services/pokeapi.service';
 import { Pokemon } from '../../models/pokemon.model';
 import { ToastController } from '@ionic/angular';
 import { PokemonCardComponent } from 'src/app/components/pokemon-card/pokemon-card.component';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,15 +22,12 @@ import { Router } from '@angular/router';
   imports: [
     IonList,
     IonItem,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
     IonButton,
     IonSpinner,
     CommonModule,
-    IonIcon,
     PokemonCardComponent,
+    HeaderComponent,
   ],
 })
 export class HomePage implements OnInit {
@@ -46,8 +40,7 @@ export class HomePage implements OnInit {
 
   constructor(
     private _pokemonService: PokeapiService,
-    private toastController: ToastController,
-    private router: Router
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -116,9 +109,5 @@ export class HomePage implements OnInit {
       color: 'primary',
     });
     toast.present();
-  }
-
-  seeFavorites() {
-    this.router.navigate(['/favorites']);
   }
 }

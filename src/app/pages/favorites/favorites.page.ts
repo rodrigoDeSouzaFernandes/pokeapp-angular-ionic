@@ -13,6 +13,7 @@ import {
 import { Pokemon } from '../../models/pokemon.model';
 import { alertController } from '@ionic/core';
 import { PokemonCardComponent } from 'src/app/components/pokemon-card/pokemon-card.component';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 
 @Component({
   selector: 'app-favorites',
@@ -30,6 +31,7 @@ import { PokemonCardComponent } from 'src/app/components/pokemon-card/pokemon-ca
     PokemonCardComponent,
     IonButtons,
     IonBackButton,
+    HeaderComponent,
   ],
 })
 export class FavoritesPage implements OnInit {
