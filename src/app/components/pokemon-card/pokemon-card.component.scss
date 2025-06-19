@@ -1,3 +1,9 @@
+:host {
+  display: block; /* faz o componente agir como bloco */
+  width: 100%; /* ocupa toda largura do container */
+  height: 100%; /* opcional: se quiser que ocupe altura também */
+}
+
 ion-card {
   position: relative;
   cursor: pointer;
@@ -6,7 +12,6 @@ ion-card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: transform 0.15s ease-in-out;
   padding: 0.5rem;
-  width: 100%;
   border: 1px solid transparent;
 }
 
