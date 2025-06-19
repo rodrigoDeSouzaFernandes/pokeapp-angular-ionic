@@ -17,6 +17,8 @@ import {
 import { PokeapiService } from '../../services/pokeapi.service';
 import { Pokemon } from '../../models/pokemon.model';
 import { ToastController } from '@ionic/angular';
+import { PokemonCardComponent } from 'src/app/components/pokemon-card/pokemon-card.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -37,6 +39,7 @@ import { ToastController } from '@ionic/angular';
     IonSpinner,
     CommonModule,
     IonIcon,
+    PokemonCardComponent,
   ],
 })
 export class HomePage implements OnInit {
@@ -49,7 +52,8 @@ export class HomePage implements OnInit {
 
   constructor(
     private _pokemonService: PokeapiService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -89,33 +93,31 @@ export class HomePage implements OnInit {
   }
 
   openDetails(name: string) {
-    alert(`Abrir detalhes do Pokémon: ${name}`);
-    // Aqui você pode navegar para outra página com detalhes usando router.navigate etc
+    this.router.navigate(['/pokemon', name]);
   }
 
   async toggleFavorite(pokemon: Pokemon, event: Event) {
-  event.stopImmediatePropagation();
+    event.stopImmediatePropagation();
 
-  const storageKey = 'favorites';
+    const storageKey = 'favorites';
 
-  const stored = localStorage.getItem(storageKey);
-  const favorites: Pokemon[] = stored ? JSON.parse(stored) : [];
+    const stored = localStorage.getItem(storageKey);
+    const favorites: Pokemon[] = stored ? JSON.parse(stored) : [];
 
-  const index = favorites.findIndex((p) => p.id === pokemon.id);
+    const index = favorites.findIndex((p) => p.id === pokemon.id);
 
-  if (index > -1) {
-    favorites.splice(index, 1);
-    this.favoriteIds.delete(pokemon.id);
-    await this.presentToast(`${pokemon.name} removido dos favoritos.`);
-  } else {
-    favorites.push(pokemon);
-    this.favoriteIds.add(pokemon.id);
-    await this.presentToast(`${pokemon.name} adicionado aos favoritos.`);
+    if (index > -1) {
+      favorites.splice(index, 1);
+      this.favoriteIds.delete(pokemon.id);
+      await this.presentToast(`${pokemon.name} removido dos favoritos.`);
+    } else {
+      favorites.push(pokemon);
+      this.favoriteIds.add(pokemon.id);
+      await this.presentToast(`${pokemon.name} adicionado aos favoritos.`);
+    }
+
+    localStorage.setItem(storageKey, JSON.stringify(favorites));
   }
-
-  localStorage.setItem(storageKey, JSON.stringify(favorites));
-}
-
 
   async presentToast(message: string) {
     const toast = await this.toastController.create({

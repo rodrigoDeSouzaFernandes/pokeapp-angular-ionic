@@ -1,27 +1,3 @@
-@import "../../../theme/variables.scss";
-
-ion-content {
-  > * {
-    max-width: $max-width;
-    margin: auto;
-  }
-}
-ion-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-ion-item {
-  --padding-start: 0;
-  --inner-padding-end: 0;
-  border: none;
-  background: transparent;
-}
-
 ion-card {
   position: relative;
   cursor: pointer;
@@ -56,7 +32,6 @@ ion-card-title {
   font-weight: 700;
   font-size: 1.1rem;
 }
-
 
 .favorite-icon {
   position: absolute;

@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
   <ion-list *ngIf="pokemons.length > 0; else noFavorites">
-    <ion-item *ngFor="let pokemon of pokemons" (click)="openDetails(pokemon.name)">
+    <!-- <ion-item *ngFor="let pokemon of pokemons" (click)="openDetails(pokemon.name)">
       <ion-card>
         <ion-icon
           name="heart"
@@ -24,6 +24,18 @@
           <ion-card-title>{{ pokemon.name | titlecase }}</ion-card-title>
         </ion-card-header>
       </ion-card>
+    </ion-item> -->
+    <ion-item
+      *ngFor="let pokemon of pokemons"
+      (click)="openDetails(pokemon.name)"
+    >
+      <app-pokemon-card
+        [pokemon]="pokemon"
+        [isFavorite]="true"
+        (cardClick)="openDetails($event)"
+        (favoriteClick)="removeFavorite($event.pokemon, $event.event)"
+      >
+      </app-pokemon-card>
     </ion-item>
   </ion-list>
 

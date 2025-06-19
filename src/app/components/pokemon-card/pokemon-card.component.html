@@ -1,0 +1,17 @@
+<ion-card (click)="onCardClick()">
+  <ion-icon
+    [name]="isFavorite ? 'heart' : 'heart-outline'"
+    class="favorite-icon"
+    (click)="onFavoriteClick($event)"
+  ></ion-icon>
+
+  <img
+    [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + pokemon.id + '.png'"
+    [alt]="pokemon.name"
+    loading="lazy"
+  />
+
+  <ion-card-header>
+    <ion-card-title>{{ pokemon.name | titlecase }}</ion-card-title>
+  </ion-card-header>
+</ion-card>

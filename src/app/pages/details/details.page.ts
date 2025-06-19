@@ -55,7 +55,6 @@ export class DetailsPage implements OnInit {
 
   ngOnInit() {
     const name = this.route.snapshot.paramMap.get('name');
-    alert(name);
     if (name) {
       this.loadPokemon(name);
     }

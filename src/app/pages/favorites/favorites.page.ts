@@ -14,6 +14,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Pokemon } from '../../models/pokemon.model';
 import { alertController } from '@ionic/core';
+import { PokemonCardComponent } from 'src/app/components/pokemon-card/pokemon-card.component';
 
 @Component({
   selector: 'app-favorites',
@@ -32,6 +33,7 @@ import { alertController } from '@ionic/core';
     IonCardTitle,
     CommonModule,
     IonIcon,
+    PokemonCardComponent,
   ],
 })
 export class FavoritesPage implements OnInit {
@@ -64,11 +66,11 @@ export class FavoritesPage implements OnInit {
         {
           text: 'Remover',
           handler: () => {
-            this.pokemons = this.pokemons.filter(p => p.id !== pokemon.id);
+            this.pokemons = this.pokemons.filter((p) => p.id !== pokemon.id);
             localStorage.setItem('favorites', JSON.stringify(this.pokemons));
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     await alert.present();
