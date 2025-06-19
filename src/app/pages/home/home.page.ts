@@ -13,6 +13,7 @@ import {
   IonCardTitle,
   IonSpinner,
   IonIcon,
+  IonButtons,
 } from '@ionic/angular/standalone';
 import { PokeapiService } from '../../services/pokeapi.service';
 import { Pokemon } from '../../models/pokemon.model';
@@ -40,6 +41,7 @@ import { Router } from '@angular/router';
     CommonModule,
     IonIcon,
     PokemonCardComponent,
+    IonButtons,
   ],
 })
 export class HomePage implements OnInit {
@@ -123,5 +125,9 @@ export class HomePage implements OnInit {
       color: 'primary',
     });
     toast.present();
+  }
+
+  seeFavorites() {
+    this.router.navigate(['/favorites']);
   }
 }
