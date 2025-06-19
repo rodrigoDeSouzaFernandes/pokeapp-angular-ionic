@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pokémons</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let pokemon of pokemons" (click)="openDetails(pokemon.name)">
+      <ion-card>
+        <img
+          [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + pokemon.id + '.png'"
+          [alt]="pokemon.name"
+          loading="lazy"
+        />
+        <ion-card-header>
+          <ion-card-title>{{ pokemon.name | titlecase }}</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" (click)="loadMore()" [disabled]="loading">
+    <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
+    <span *ngIf="!loading">Carregar mais</span>
+  </ion-button>
+</ion-content>
