@@ -1,16 +1,18 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Pokémons</ion-title>
-  </ion-toolbar>
-  <ion-button
-    fill="none"
-    routerLink="/favorites"
-    class="favorite-button"
-    (click)="seeFavorites()"
-  >
-    <ion-icon slot="start" name="heart"></ion-icon>
-    <span class="favorite-button-text"> Ver Favoritos </span>
-  </ion-button>
+  <div class="header-container">
+    <ion-toolbar>
+      <ion-title>Pokémons</ion-title>
+    </ion-toolbar>
+    <ion-button
+      fill="none"
+      routerLink="/favorites"
+      class="favorite-button"
+      (click)="seeFavorites()"
+    >
+      <ion-icon slot="start" name="heart"></ion-icon>
+      <span class="favorite-button-text"> Ver Favoritos </span>
+    </ion-button>
+  </div>
 </ion-header>
 
 <ion-content class="ion-padding">

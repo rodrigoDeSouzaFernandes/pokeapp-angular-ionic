@@ -80,3 +80,8 @@ ion-card-subtitle {
   color: var(--ion-color-medium);
   font-size: 0.85rem;
 }
+
+.header-container {
+  max-width: $max-width;
+  margin: auto;
+}

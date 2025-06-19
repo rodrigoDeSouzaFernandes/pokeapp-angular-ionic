@@ -1,3 +1,5 @@
+@import "../../../theme/variables.scss";
+
 :root {
   --color-electric-light: #ffeb3b;
   --color-electric-dark: #fbc02d;
@@ -13,9 +15,14 @@ ion-content {
   padding: 1rem 1.2rem;
 
   > * {
-    max-width: 1400px;
+    max-width: $max-width;
     margin: auto;
   }
+}
+
+.header-container {
+  max-width: $max-width;
+  margin: auto;
 }
 
 .pokemon-card {

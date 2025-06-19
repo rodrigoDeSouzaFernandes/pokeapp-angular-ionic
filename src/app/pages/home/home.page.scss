@@ -22,9 +22,11 @@ ion-item {
   background: transparent;
 }
 
-ion-header {
-  display: flex;
+.header-container {
+  max-width: $max-width;
+  margin: auto;
   align-items: center;
+  display: flex;
   padding-inline: 20px;
 
   .favorite-button {
@@ -54,7 +56,7 @@ ion-header {
 }
 
 @media screen and (min-width: 400px) {
-  ion-header {
+  .header-container {
     .favorite-button {
       &:hover::before {
         width: 100%;
