@@ -7,6 +7,8 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
+  IonButtons,
+  IonBackButton,
 } from '@ionic/angular/standalone';
 import { Pokemon } from '../../models/pokemon.model';
 import { alertController } from '@ionic/core';
@@ -26,6 +28,8 @@ import { PokemonCardComponent } from 'src/app/components/pokemon-card/pokemon-ca
     IonContent,
     CommonModule,
     PokemonCardComponent,
+    IonButtons,
+    IonBackButton,
   ],
 })
 export class FavoritesPage implements OnInit {
