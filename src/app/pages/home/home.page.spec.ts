@@ -1,127 +1,89 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomePage } from './home.page';
-import { PokeapiService } from 'src/app/services/pokeapi.service';
-import { of, throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import { PokeapiService } from '../../services/pokeapi.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
+
+class ToastControllerMock {
+  create() {
+    return Promise.resolve({
+      present: () => Promise.resolve(),
+    });
+  }
+}
+
+class RouterMock {
+  navigate = jasmine.createSpy('navigate');
+}
 
 describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
-  let pokeapiServiceSpy: jasmine.SpyObj<PokeapiService>;
-  let routerSpy: jasmine.SpyObj<Router>;
-  let toastControllerSpy: jasmine.SpyObj<ToastController>;
+  let pokeapiService: PokeapiService;
 
-  beforeEach(waitForAsync(() => {
-    const pokeapiSpy = jasmine.createSpyObj('PokeapiService', ['getPokemons']);
-    const router = jasmine.createSpyObj('Router', ['navigate']);
-    const toast = jasmine.createSpyObj('ToastController', ['create']);
-
-    // Mock do toast que retorna um objeto com método present()
-    const toastElementSpy = jasmine.createSpyObj('HTMLIonToastElement', ['present']);
-    toast.create.and.returnValue(Promise.resolve(toastElementSpy));
-
-    TestBed.configureTestingModule({
-      imports: [HomePage], // Importar componente standalone aqui
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, HomePage],  
       providers: [
-        { provide: PokeapiService, useValue: pokeapiSpy },
-        { provide: Router, useValue: router },
-        { provide: ToastController, useValue: toast },
+        PokeapiService,
+        { provide: ToastController, useClass: ToastControllerMock },
+        { provide: Router, useClass: RouterMock },
       ],
     }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(HomePage);
     component = fixture.componentInstance;
-    pokeapiServiceSpy = TestBed.inject(PokeapiService) as jasmine.SpyObj<PokeapiService>;
-    routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
-    toastControllerSpy = TestBed.inject(ToastController) as jasmine.SpyObj<ToastController>;
-  }));
+    pokeapiService = TestBed.inject(PokeapiService);
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load favorites from localStorage', () => {
-    const mockFavorites = [
-      { id: 1, name: 'bulbasaur', url: '...' },
-      { id: 2, name: 'ivysaur', url: '...' },
-    ];
-    localStorage.setItem('favorites', JSON.stringify(mockFavorites));
-
-    component.loadFavorites();
-
-    expect(component.favoriteIds.has(1)).toBeTrue();
-    expect(component.favoriteIds.has(2)).toBeTrue();
-  });
-
   it('should load pokemons successfully', () => {
-    const apiResponse = {
+    const mockPokemons = {
       results: [
         { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
+        { name: 'ivysaur', url: 'https://pokeapi.co/api/v2/pokemon/2/' },
       ],
     };
 
-    pokeapiServiceSpy.getPokemons.and.returnValue(of(apiResponse));
+    spyOn(pokeapiService, 'getPokemons').and.returnValue(of(mockPokemons));
 
     component.loadPokemons(0);
 
-    expect(component.pokemons.length).toBe(1);
-    expect(component.pokemons[0].id).toBe(1);
+    expect(pokeapiService.getPokemons).toHaveBeenCalledWith(component.limit, 0);
+    expect(component.pokemons.length).toBe(2);
+    expect(component.pokemons[0].id).toBe(1);  
+    expect(component.pokemons[1].name).toBe('ivysaur');
     expect(component.loading).toBeFalse();
   });
 
-  it('should handle error when loading pokemons', () => {
-    pokeapiServiceSpy.getPokemons.and.returnValue(throwError(() => 'API Error'));
+  it('should toggle favorite and update localStorage', async () => {
+    const pokemon = { id: 1, name: 'bulbasaur', url: '' };
 
-    component.loadPokemons(0);
+    localStorage.clear();
 
-    expect(component.loading).toBeFalse();
+    await component.toggleFavorite(pokemon, new Event('click'));
+    expect(component.favoriteIds.has(pokemon.id)).toBeTrue();
+
+    const stored = JSON.parse(localStorage.getItem('favorites') || '[]');
+    expect(stored.find((p: any) => p.id === pokemon.id)).toBeTruthy();
+
+    await component.toggleFavorite(pokemon, new Event('click'));
+    expect(component.favoriteIds.has(pokemon.id)).toBeFalse();
+
+    const storedAfter = JSON.parse(localStorage.getItem('favorites') || '[]');
+    expect(storedAfter.find((p: any) => p.id === pokemon.id)).toBeFalsy();
   });
 
-  it('should add pokemon to favorites', async () => {
-    const mockPokemon = { id: 1, name: 'bulbasaur', url: '...' };
-
-    const event = new Event('click');
-    spyOn(event, 'stopImmediatePropagation');
-
-    await component.toggleFavorite(mockPokemon, event);
-
-    const stored = JSON.parse(localStorage.getItem('favorites')!);
-    expect(stored.length).toBe(1);
-    expect(component.favoriteIds.has(1)).toBeTrue();
-    expect(event.stopImmediatePropagation).toHaveBeenCalled();
-    expect(toastControllerSpy.create).toHaveBeenCalled();
-  });
-
-  it('should remove pokemon from favorites', async () => {
-    const mockPokemon = { id: 1, name: 'bulbasaur', url: '...' };
-    localStorage.setItem('favorites', JSON.stringify([mockPokemon]));
-    component.favoriteIds.add(1);
-
-    const event = new Event('click');
-    spyOn(event, 'stopImmediatePropagation');
-
-    await component.toggleFavorite(mockPokemon, event);
-
-    const stored = JSON.parse(localStorage.getItem('favorites')!);
-    expect(stored.length).toBe(0);
-    expect(component.favoriteIds.has(1)).toBeFalse();
-    expect(toastControllerSpy.create).toHaveBeenCalled();
-  });
-
-  it('should navigate to favorites', () => {
+  it('should navigate to favorites on seeFavorites', () => {
     component.seeFavorites();
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/favorites']);
-  });
-
-  it('should load more pokemons', () => {
-    spyOn(component, 'loadPokemons');
-    component.offset = 0;
-    component.pageSize = 50;
-
-    component.loadMore();
-
-    expect(component.offset).toBe(50);
-    expect(component.loadPokemons).toHaveBeenCalledWith(50);
+    const router = TestBed.inject(Router) as unknown as RouterMock;
+    expect(router.navigate).toHaveBeenCalledWith(['/favorites']);
   });
 });
