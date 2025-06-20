@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonCard,
   IonCardHeader,
@@ -12,9 +9,6 @@ import {
   IonChip,
   IonLabel,
   IonProgressBar,
-  IonButton,
-  IonButtons,
-  IonBackButton,
   IonSpinner,
   IonCardSubtitle,
 } from '@ionic/angular/standalone';
@@ -27,9 +21,6 @@ import { HeaderComponent } from 'src/app/components/header/header.component';
   styleUrls: ['./details.page.scss'],
   standalone: true,
   imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
     IonCard,
     IonCardHeader,
@@ -37,13 +28,10 @@ import { HeaderComponent } from 'src/app/components/header/header.component';
     IonChip,
     IonLabel,
     IonProgressBar,
-    IonButton,
-    IonButtons,
-    IonBackButton,
     CommonModule,
     IonSpinner,
     IonCardSubtitle,
-    HeaderComponent
+    HeaderComponent,
   ],
 })
 export class DetailsPage implements OnInit {

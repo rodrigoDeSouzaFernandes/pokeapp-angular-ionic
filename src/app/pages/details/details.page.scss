@@ -188,7 +188,7 @@ ion-progress-bar {
 
 .first-section {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 25%);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 25%));
   flex-wrap: wrap;
   justify-content: center;
   align-items: start;
@@ -210,45 +210,5 @@ ion-progress-bar {
 .base-xp {
   p {
     padding-left: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .pokemon-card {
-    padding: 1rem 0.6rem 1.4rem;
-  }
-
-  .pokemon-img {
-    width: 130px;
-    height: 130px;
-    margin: -65px auto 0;
-  }
-
-  ion-card-title {
-    font-size: 1.6rem;
-  }
-
-  .info-section h2 {
-    font-size: 1.1rem;
-  }
-
-  .stat-row span:first-child {
-    flex-basis: 100px;
-    font-size: 0.9rem;
-  }
-
-  .stat-value {
-    width: 32px;
-    font-size: 0.95rem;
-  }
-
-  ion-chip {
-    height: 30px;
-    font-size: 0.9rem;
-    padding: 0 12px;
-  }
-
-  ul {
-    font-size: 0.95rem;
   }
 }
